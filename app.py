@@ -432,26 +432,43 @@ def search_jobs():
     companies_cfg = load_companies()
     
     # Determine lists of companies per portal
-    greenhouse_list = override_companies if 'greenhouse' in sources and override_companies else companies_cfg.get('greenhouse', [])
-    lever_list = override_companies if 'lever' in sources and override_companies else companies_cfg.get('lever', [])
-    smartrecruiters_list = override_companies if 'smartrecruiters' in sources and override_companies else companies_cfg.get('smartrecruiters', [])
+    greenhouse_cfg = companies_cfg.get('greenhouse', [])
+    lever_cfg = companies_cfg.get('lever', [])
+    smartrecruiters_cfg = companies_cfg.get('smartrecruiters', [])
     
-    # Dynamically extract workable companies from custom list if not defined
-    workable_list = override_companies if 'workable' in sources and override_companies else companies_cfg.get('workable', [])
-    if not workable_list or ('workable' in sources and not override_companies):
-        workable_list = list(companies_cfg.get('workable', []))
-        for c in companies_cfg.get('custom', []):
-            if c.get('ats', '').lower() == 'workable':
-                parsed_url = urlparse(c.get('url', ''))
-                parts = [p for p in parsed_url.path.split('/') if p]
-                if parts:
-                    slug = parts[0]
-                    if slug not in workable_list:
-                        workable_list.append(slug)
+    # Workable custom list discovery
+    workable_cfg = list(companies_cfg.get('workable', []))
+    for c in companies_cfg.get('custom', []):
+        if c.get('ats', '').lower() == 'workable':
+            parsed_url = urlparse(c.get('url', ''))
+            parts = [p for p in parsed_url.path.split('/') if p]
+            if parts:
+                slug = parts[0]
+                if slug not in workable_cfg:
+                    workable_cfg.append(slug)
+
+    # Route override companies to their respective portals
+    if override_companies:
+        greenhouse_list = [c for c in override_companies if c.lower() in [g.lower() for g in greenhouse_cfg]]
+        lever_list = [c for c in override_companies if c.lower() in [l.lower() for l in lever_cfg]]
+        smartrecruiters_list = [c for c in override_companies if c.lower() in [s.lower() for s in smartrecruiters_cfg]]
+        workable_list = [c for c in override_companies if c.lower() in [w.lower() for w in workable_cfg]]
+        
+        # If a company doesn't match any standard list but is explicitly typed, let's keep it as fallback for Greenhouse/Lever
+        all_known_slugs = set([g.lower() for g in greenhouse_cfg] + [l.lower() for l in lever_cfg] + [s.lower() for s in smartrecruiters_cfg] + [w.lower() for w in workable_cfg])
+        for c in override_companies:
+            if c.lower() not in all_known_slugs:
+                if 'greenhouse' in sources:
+                    greenhouse_list.append(c)
+    else:
+        greenhouse_list = greenhouse_cfg
+        lever_list = lever_cfg
+        smartrecruiters_list = smartrecruiters_cfg
+        workable_list = workable_cfg
     
     workday_list = companies_cfg.get('workday', [])
     if 'workday' in sources and override_companies:
-        workday_list = [w for w in workday_list if w['company'].lower() in [c.lower() for c in override_companies]]
+        workday_list = [w for w in workday_list if any(c.lower() in w['company'].lower() for c in override_companies)]
         
     logger.info(f"Search query: keywords='{keywords}' location='{location}' days_ago={days_ago} sources={sources}")
     
