@@ -478,6 +478,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -620,6 +622,7 @@
         .badge-zip_recruiter { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
         .badge-google { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
         .badge-glassdoor { background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3); }
+        .badge-portal { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
 
         .apply-btn {
             background: var(--color-indigo);
@@ -753,9 +756,9 @@
                 </div>
             </div>
             <div class="header-actions">
-                <div style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem;">
-                    <span style="width: 8px; height: 8px; background: var(--color-emerald); border-radius: 50%; display: inline-block;"></span>
-                    Local Python Node Active (Port 5000)
+                <div id="mode-badge" style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem;">
+                    <span id="badge-dot" style="width: 8px; height: 8px; background: var(--color-purple); border-radius: 50%; display: inline-block;"></span>
+                    <span id="badge-text">Static Mode Active (Offline)</span>
                 </div>
             </div>
         </header>
@@ -793,6 +796,14 @@
                 <div class="client-list-card">
                     <div id="clients-container">
                         <div class="no-data-msg" style="padding: 1rem 0;">Scanning profiles...</div>
+                    </div>
+                    <!-- Direct file import loader for GitHub Pages static mode -->
+                    <div style="margin-top: 1rem; border-top: 1px solid var(--panel-border); padding-top: 0.75rem; display: flex; justify-content: center;">
+                        <label class="btn-outline" style="cursor: pointer; padding: 6px 12px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 4px; border-color: var(--color-indigo); color: var(--color-indigo);">
+                            <input type="file" id="client-file-input" accept=".json" style="display: none;">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            Import Profile JSON
+                        </label>
                     </div>
                 </div>
 
@@ -853,7 +864,7 @@
                                     <span class="custom-checkbox"></span>
                                     Glassdoor
                                 </label>
-                                <label class="checkbox-label">
+                                <label class="checkbox-label" id="google-check-label">
                                     <input type="checkbox" name="site-name" value="google" checked>
                                     <span class="custom-checkbox"></span>
                                     Google Jobs (Careers portals)
@@ -862,7 +873,7 @@
                         </div>
 
                         <div class="action-row">
-                            <span style="font-size: 0.8rem; color: var(--text-secondary);">
+                            <span style="font-size: 0.8rem; color: var(--text-secondary);" id="action-note">
                                 Note: Use "Google Careers Helper" to open a direct, CAPTCHA-safe search for company portal jobs (Greenhouse, Lever, Workday) in your browser.
                             </span>
                             <div style="display: flex; gap: 1rem;">
@@ -925,11 +936,61 @@
     </div>
 
     <script>
+        // Default Client Profile templates embedded for static deployment
+        const DEFAULT_CLIENTS = {
+            "mounika": {
+                "profile": {
+                    "name": "Mounika Yella",
+                    "subtitle": "Lead Automation Engineer",
+                    "email": "mounikayella1798@gmail.com",
+                    "phone": "+1 (469) 269-0429",
+                    "location": "Dallas, USA",
+                    "linkedin": "https://www.linkedin.com/in/mounika",
+                    "education": [
+                        { "degree": "Master of Science", "school": "USA University", "location": "USA" }
+                    ]
+                },
+                "text": "[PROFESSIONAL SUMMARY]\nLead Automation Engineer with 4+ years of experience supporting automation system validation, scenario testing, and process verification across manufacturing, life sciences, and EPC industrial environments. Proficient in Allen-Bradley ControlLogix, Siemens TIA Portal, and Ignition Perspective automation platforms, with hands-on execution of scenario-based testing, control logic validation, and multi-discipline project coordination. Delivers end-to-end automation project support from requirements definition through commissioning sign-off across concurrent production deployments. Seeking to apply industrial automation expertise and process optimization experience to drive simulation-driven manufacturing improvements.\n\n[TECHNICAL SKILLS]\nCore Automation & Process Validation: Functional testing, scenario testing, integration testing, system validation, UAT, FAT, SAT, smoke testing, regression testing, black-box testing, exploratory testing.\nAutomation Tools & Scripting: Python test scripting, Pytest, Robot Framework, Postman, REST API testing, Jenkins, Azure DevOps, Git, SoapUI.\nIndustrial Automation Platforms: Allen-Bradley ControlLogix, Siemens TIA Portal, Siemens S7-1200/1500, Ignition Perspective, FactoryTalk View SE, Siemens WinCC, AVEVA InTouch, DOPSoft.",
+                "source_file": "Mounika.json"
+            },
+            "pravallika": {
+                "profile": {
+                    "name": "Pravallika Boyapati",
+                    "subtitle": "Automation Test Engineer",
+                    "email": "bpravs17@gmail.com",
+                    "phone": "+1 (469) 213-0772",
+                    "location": "Dallas, USA",
+                    "linkedin": "https://www.linkedin.com/in/pravallika-chowdary-99363029a",
+                    "education": [
+                        { "degree": "Master of Science in Computer Engineering", "school": "University of Houston-Clear Lake", "location": "Houston, TX" }
+                    ]
+                },
+                "text": "[PROFESSIONAL SUMMARY]\nAutomation Test Engineer with 4+ years of experience specializing in validating industrial control systems, PLC/SCADA platforms, and embedded software before they go live. Proven track record eliminating defects at the FAT/SAT stage across manufacturing, oil & gas, and automotive environments. Proficient in Python, Pytest, JIRA, TestRail, and REST API testing, with hands-on expertise in Allen-Bradley, Siemens, and Ignition automation platforms.\n\n[TECHNICAL SKILLS]\nCore Testing: Functional testing, regression testing, integration testing, system testing, API testing, UAT, smoke testing, sanity testing, black-box testing, white-box testing, exploratory testing.\nTest Automation & Tools: Pytest, Robot Framework, Selenium, Python test scripting, Postman, SoapUI, REST API testing, Jenkins, Azure DevOps, Git.",
+                "source_file": "pravallika_backup.json"
+            },
+            "somasekhar": {
+                "profile": {
+                    "name": "Soma Sekhar Damerla",
+                    "subtitle": "Project Manager",
+                    "email": "sekhardamerla8@gmail.com",
+                    "phone": "+1 651 964 9573",
+                    "location": "Texas, USA",
+                    "linkedin": "https://www.linkedin.com/in/somasekhar",
+                    "education": [
+                        { "degree": "Master of Science in Management Information Systems", "school": "Concordia University", "location": "Minnesota, USA" }
+                    ]
+                },
+                "text": "[PROFESSIONAL SUMMARY]\nProject Manager with 6+ years of experience leading infrastructure, energy, facility, and construction projects across aviation, education, healthcare, commercial, and industrial sectors. Proven expertise in project planning, scheduling, budgeting, vendor management, procurement, stakeholder coordination, and regulatory compliance.\n\n[TECHNICAL SKILLS]\nProject Management: Project Planning, Project Execution, Project Lifecycle Management, Risk Management, Cost Control, Budget Management.\nScheduling & Tracking: Microsoft Project, Primavera P6, Critical Path Analysis, Resource Planning.",
+                "source_file": "Soma.json"
+            }
+        };
+
         // State variables
         let clients = {};
         let activeClientId = null;
         let tracker = {};
         let currentJobs = [];
+        let isLocalMode = false;
 
         // DOM elements
         const clientsContainer = document.getElementById('clients-container');
@@ -943,6 +1004,11 @@
         const resultsCountStr = document.getElementById('results-count');
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toast-message');
+        const clientFileInput = document.getElementById('client-file-input');
+
+        // Mode badge elements
+        const badgeDot = document.getElementById('badge-dot');
+        const badgeText = document.getElementById('badge-text');
 
         // Stats elements
         const statScraped = document.getElementById('stat-scraped');
@@ -951,54 +1017,115 @@
         const statInterviewing = document.getElementById('stat-interviewing');
 
         // Page load initialization
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', async () => {
+            await checkApiMode();
             loadClients();
             loadTracker();
         });
 
-        // Load clients from Python API
-        async function loadClients() {
+        // Detect if Flask backend is available
+        async function checkApiMode() {
             try {
-                const response = await fetch('/api/clients');
-                clients = await response.json();
-                
-                const clientKeys = Object.keys(clients);
-                statClients.textContent = clientKeys.length;
-
-                if (clientKeys.length === 0) {
-                    clientsContainer.innerHTML = '<div class="no-data-msg">No client .json files discovered. Place client files in directory.</div>';
-                    return;
-                }
-
-                clientsContainer.innerHTML = '';
-                clientKeys.forEach((key, index) => {
-                    const client = clients[key];
-                    const item = document.createElement('div');
-                    item.className = 'client-item' + (index === 0 ? ' active' : '');
-                    item.innerHTML = `
-                        <div class="client-name-row">
-                            <span class="client-name">${client.profile.name || key}</span>
-                            <span class="client-source-badge">${client.source_file}</span>
-                        </div>
-                        <span class="client-title">${client.profile.subtitle || 'Client'}</span>
-                    `;
-                    
-                    item.addEventListener('click', () => {
-                        document.querySelectorAll('.client-item').forEach(el => el.classList.remove('active'));
-                        item.classList.add('active');
-                        selectClient(key);
-                    });
-
-                    clientsContainer.appendChild(item);
-                });
-
-                // Auto-select first client
-                if (clientKeys.length > 0) {
-                    selectClient(clientKeys[0]);
+                const res = await fetch('/api/clients', { method: 'GET', signal: AbortSignal.timeout(2000) });
+                if (res.ok) {
+                    isLocalMode = true;
+                    badgeDot.style.backgroundColor = 'var(--color-emerald)';
+                    badgeText.textContent = "Local Scraper Mode Active (Port 5000)";
+                    document.getElementById('action-note').textContent = 'Note: Under local mode, "Find Matching Jobs" runs the Python jobspy crawler on LinkedIn/Indeed.';
                 }
             } catch (err) {
-                console.error("Error loading clients:", err);
-                clientsContainer.innerHTML = '<div class="no-data-msg" style="color: var(--color-rose);">Failed to scan clients. API offline.</div>';
+                isLocalMode = false;
+                badgeDot.style.backgroundColor = 'var(--color-purple)';
+                badgeText.textContent = "Static Pages Mode Active (Offline)";
+                document.getElementById('action-note').innerHTML = '<strong>Static Mode Warning:</strong> Job discovery crawler requires Python backend. Please use the purple <strong>"Google Careers Helper"</strong> to search direct portals!';
+            }
+        }
+
+        // Handle user uploading client profile JSONs manually (Static Mode helper)
+        clientFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    // Support format: { "client_id": { "profile": {...}, "text": "..." } }
+                    let imported = 0;
+                    for (const key in data) {
+                        if (data[key].profile) {
+                            clients[key] = {
+                                profile: data[key].profile,
+                                text: data[key].text || '',
+                                source_file: file.name
+                            };
+                            imported++;
+                        }
+                    }
+                    if (imported > 0) {
+                        showToast(`Successfully imported ${imported} profiles!`);
+                        renderClientsList();
+                    } else {
+                        alert("Invalid JSON format. Make sure it contains profile object.");
+                    }
+                } catch (err) {
+                    alert("Failed to parse JSON file.");
+                }
+            };
+            reader.readAsText(file);
+        });
+
+        // Load clients from API (Local Mode) or templates (Static Mode)
+        async function loadClients() {
+            if (isLocalMode) {
+                try {
+                    const response = await fetch('/api/clients');
+                    clients = await response.json();
+                } catch (err) {
+                    console.warn("API load failed, falling back to templates.");
+                    clients = { ...DEFAULT_CLIENTS };
+                }
+            } else {
+                clients = { ...DEFAULT_CLIENTS };
+            }
+            renderClientsList();
+        }
+
+        // Render client list items
+        function renderClientsList() {
+            const clientKeys = Object.keys(clients);
+            statClients.textContent = clientKeys.length;
+
+            if (clientKeys.length === 0) {
+                clientsContainer.innerHTML = '<div class="no-data-msg">No client files loaded.</div>';
+                return;
+            }
+
+            clientsContainer.innerHTML = '';
+            clientKeys.forEach((key, index) => {
+                const client = clients[key];
+                const item = document.createElement('div');
+                item.className = 'client-item' + (index === 0 ? ' active' : '');
+                item.innerHTML = `
+                    <div class="client-name-row">
+                        <span class="client-name">${client.profile.name || key}</span>
+                        <span class="client-source-badge">${client.source_file || 'Imported'}</span>
+                    </div>
+                    <span class="client-title">${client.profile.subtitle || 'Client'}</span>
+                `;
+                
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.client-item').forEach(el => el.classList.remove('active'));
+                    item.classList.add('active');
+                    selectClient(key);
+                });
+
+                clientsContainer.appendChild(item);
+            });
+
+            // Auto-select first client
+            if (clientKeys.length > 0) {
+                selectClient(clientKeys[0]);
             }
         }
 
@@ -1062,7 +1189,6 @@
             let textToCopy = el.textContent || el.innerText;
             
             navigator.clipboard.writeText(textToCopy).then(() => {
-                // Show copied feedback on button
                 const btn = el.parentElement.querySelector('.copy-btn');
                 if (btn) {
                     const originalText = btn.textContent;
@@ -1079,26 +1205,32 @@
             });
         }
 
-        // Load application statuses from tracker
+        // Load application statuses from tracker API (Local) or LocalStorage (Static)
         async function loadTracker() {
-            try {
-                const response = await fetch('/api/tracker');
-                tracker = await response.json();
-                updateStats();
-                
-                // If table is loaded, refresh statuses
-                if (currentJobs.length > 0) {
-                    renderTable(currentJobs);
+            if (isLocalMode) {
+                try {
+                    const response = await fetch('/api/tracker');
+                    tracker = await response.json();
+                } catch (err) {
+                    loadTrackerFromStorage();
                 }
-            } catch (err) {
-                console.error("Error loading tracker:", err);
+            } else {
+                loadTrackerFromStorage();
             }
+            updateStats();
+            if (currentJobs.length > 0) {
+                renderTable(currentJobs);
+            }
+        }
+
+        function loadTrackerFromStorage() {
+            const local = localStorage.getItem('jobstaffer_tracker');
+            tracker = local ? JSON.parse(local) : {};
         }
 
         // Calculate and display stats
         function updateStats() {
             const trackerValues = Object.values(tracker);
-            
             const appliedCount = trackerValues.filter(t => t.status === 'Applied').length;
             const interviewingCount = trackerValues.filter(t => t.status === 'Interviewing').length;
 
@@ -1134,6 +1266,11 @@
 
         // Job site crawl action
         searchBtn.addEventListener('click', async () => {
+            if (!isLocalMode) {
+                alert("Crawler requires local Python node. Please launch Flask server or use Google Careers Helper to find listings directly!");
+                return;
+            }
+
             const search_term = document.getElementById('job-title-input').value.trim();
             const location = document.getElementById('job-location-input').value.trim();
             const results_wanted = document.getElementById('job-limit-input').value;
@@ -1211,7 +1348,6 @@
             jobs.forEach(job => {
                 const tr = document.createElement('tr');
                 
-                // Clean columns
                 const jobUrl = job.job_url || '#';
                 const title = job.title || 'Untitled';
                 const company = job.company || 'Unknown Company';
@@ -1227,7 +1363,7 @@
                 // Build Row HTML
                 tr.innerHTML = `
                     <td>
-                        <span class="badge badge-${source.toLowerCase()}">${source}</span>
+                        <span class="badge badge-${source.toLowerCase().replace(' ', '_')}">${source}</span>
                     </td>
                     <td>
                         <div class="job-title-cell">
@@ -1268,48 +1404,58 @@
 
         // Action when "Apply" button link is clicked
         function registerApplyClick(jobUrl, title, company) {
-            // Auto mark as Applied for current selected client if not set
             const currentStatus = tracker[jobUrl]?.status || 'Not Applied';
             if (currentStatus === 'Not Applied' && activeClientId) {
-                const client = clients[activeClientId];
                 updateJobStatus(jobUrl, 'Applied', title, company);
             }
         }
 
-        // Post status update to server
+        // Post status update to server (Local) or save to localStorage (Static)
         async function updateJobStatus(jobUrl, status, jobTitle, company) {
             const client = activeClientId ? clients[activeClientId] : null;
             const clientName = client ? client.profile.name : 'Unknown';
 
-            try {
-                const response = await fetch('/api/tracker', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        job_url: jobUrl,
-                        client_id: activeClientId,
-                        client_name: clientName,
-                        status: status,
-                        job_title: jobTitle,
-                        company: company
-                    })
-                });
+            if (isLocalMode) {
+                try {
+                    const response = await fetch('/api/tracker', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            job_url: jobUrl,
+                            client_id: activeClientId,
+                            client_name: clientName,
+                            status: status,
+                            job_title: jobTitle,
+                            company: company
+                        })
+                    });
 
-                if (response.ok) {
-                    const result = await response.json();
-                    tracker = result.tracker;
-                    updateStats();
-                    showToast(`Status updated to: ${status}`);
-                    
-                    // Re-render select dropdown class
-                    renderTable(currentJobs);
-                } else {
-                    showToast("Failed to save status", "error");
+                    if (response.ok) {
+                        const result = await response.json();
+                        tracker = result.tracker;
+                        updateStats();
+                        showToast(`Status updated to: ${status}`);
+                        renderTable(currentJobs);
+                        return;
+                    }
+                } catch (err) {
+                    console.warn("Failed to update status on server, writing to localStorage.");
                 }
-            } catch (err) {
-                console.error("Status save error:", err);
-                showToast("Failed to connect to server", "error");
             }
+
+            // Fallback: LocalStorage tracking
+            tracker[jobUrl] = {
+                client_id: activeClientId,
+                client_name: clientName,
+                status: status,
+                job_title: jobTitle,
+                company: company,
+                updated_at: new Date().toISOString().slice(0, 19).replace('T', ' ')
+            };
+            localStorage.setItem('jobstaffer_tracker', JSON.stringify(tracker));
+            updateStats();
+            showToast(`Status updated to: ${status} (Local DB)`);
+            renderTable(currentJobs);
         }
 
         // Export current table results to CSV
@@ -1317,8 +1463,6 @@
             if (currentJobs.length === 0) return;
 
             let csvContent = "data:text/csv;charset=utf-8,";
-            
-            // Header columns
             csvContent += "Source,Title,Company,Location,Date Posted,URL,Status,Client\n";
 
             currentJobs.forEach(job => {

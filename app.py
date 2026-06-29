@@ -9,7 +9,7 @@ from datetime import datetime
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__, template_folder='templates', static_folder='templates')
+app = Flask(__name__, template_folder='.', static_folder='.')
 
 PORT = 5000
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
