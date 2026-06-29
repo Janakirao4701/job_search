@@ -435,7 +435,19 @@ def search_jobs():
     greenhouse_list = override_companies if 'greenhouse' in sources and override_companies else companies_cfg.get('greenhouse', [])
     lever_list = override_companies if 'lever' in sources and override_companies else companies_cfg.get('lever', [])
     smartrecruiters_list = override_companies if 'smartrecruiters' in sources and override_companies else companies_cfg.get('smartrecruiters', [])
+    
+    # Dynamically extract workable companies from custom list if not defined
     workable_list = override_companies if 'workable' in sources and override_companies else companies_cfg.get('workable', [])
+    if not workable_list or ('workable' in sources and not override_companies):
+        workable_list = list(companies_cfg.get('workable', []))
+        for c in companies_cfg.get('custom', []):
+            if c.get('ats', '').lower() == 'workable':
+                parsed_url = urlparse(c.get('url', ''))
+                parts = [p for p in parsed_url.path.split('/') if p]
+                if parts:
+                    slug = parts[0]
+                    if slug not in workable_list:
+                        workable_list.append(slug)
     
     workday_list = companies_cfg.get('workday', [])
     if 'workday' in sources and override_companies:
@@ -453,7 +465,12 @@ def search_jobs():
         # 1. Jobspy broad boards
         jobspy_sites = [s for s in sources if s in ['indeed', 'linkedin', 'zip_recruiter', 'glassdoor']]
         if jobspy_sites:
-            futures[executor.submit(scrape_jobspy, jobspy_sites, keywords, location, results_wanted, days_ago)] = "jobspy"
+            if override_companies:
+                for company in override_companies:
+                    comp_query = f"{keywords} company:\"{company}\""
+                    futures[executor.submit(scrape_jobspy, jobspy_sites, comp_query, location, results_wanted, days_ago)] = f"jobspy:{company}"
+            else:
+                futures[executor.submit(scrape_jobspy, jobspy_sites, keywords, location, results_wanted, days_ago)] = "jobspy"
             
         # 2. Greenhouse portals
         if 'greenhouse' in sources:
