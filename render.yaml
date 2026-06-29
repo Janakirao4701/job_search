@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: job-search
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --timeout 120 app:app
