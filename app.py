@@ -165,5 +165,6 @@ def search_jobs():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    print(f"Starting JobStaffer Dashboard on http://localhost:{PORT}")
-    app.run(debug=True, port=PORT)
+    port = int(os.environ.get('PORT', 5000))
+    print(f"Starting JobStaffer Dashboard on port {port}")
+    app.run(host='0.0.0.0', port=port, debug=True)
