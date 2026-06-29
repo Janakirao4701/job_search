@@ -1025,15 +1025,27 @@
 
         // Detect if Flask backend is available
         async function checkApiMode() {
+            const isLocalHost = ['localhost', '127.0.0.1', '192.168.'].some(host => window.location.hostname.includes(host));
+            
             try {
-                const res = await fetch('/api/clients', { method: 'GET', signal: AbortSignal.timeout(2000) });
+                const res = await fetch('/api/clients');
                 if (res.ok) {
                     isLocalMode = true;
                     badgeDot.style.backgroundColor = 'var(--color-emerald)';
                     badgeText.textContent = "Local Scraper Mode Active (Port 5000)";
                     document.getElementById('action-note').textContent = 'Note: Under local mode, "Find Matching Jobs" runs the Python jobspy crawler on LinkedIn/Indeed.';
+                    return;
                 }
             } catch (err) {
+                console.warn("API check failed:", err);
+            }
+            
+            if (isLocalHost) {
+                isLocalMode = true;
+                badgeDot.style.backgroundColor = 'var(--color-emerald)';
+                badgeText.textContent = "Local Scraper Mode Active (Port 5000)";
+                document.getElementById('action-note').textContent = 'Note: Under local mode, "Find Matching Jobs" runs the Python jobspy crawler on LinkedIn/Indeed.';
+            } else {
                 isLocalMode = false;
                 badgeDot.style.backgroundColor = 'var(--color-purple)';
                 badgeText.textContent = "Static Pages Mode Active (Offline)";
