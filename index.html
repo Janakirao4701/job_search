@@ -1021,6 +1021,9 @@
             await checkApiMode();
             loadClients();
             loadTracker();
+            restoreSearchInputs();
+            restoreLastJobs();
+            setupInputListeners();
         });
 
         // Detect if Flask backend is available
@@ -1050,6 +1053,66 @@
                 badgeDot.style.backgroundColor = 'var(--color-purple)';
                 badgeText.textContent = "Static Pages Mode Active (Offline)";
                 document.getElementById('action-note').innerHTML = '<strong>Static Mode Warning:</strong> Job discovery crawler requires Python backend. Please use the purple <strong>"Google Careers Helper"</strong> to search direct portals!';
+            }
+        }
+
+        // Save and restore search parameters from localStorage
+        function saveSearchInputs() {
+            const inputs = {
+                title: document.getElementById('job-title-input').value,
+                location: document.getElementById('job-location-input').value,
+                limit: document.getElementById('job-limit-input').value,
+                age: document.getElementById('job-age-input').value,
+                sites: Array.from(document.querySelectorAll('input[name="site-name"]:checked')).map(cb => cb.value)
+            };
+            localStorage.setItem('jobstaffer_search_inputs', JSON.stringify(inputs));
+        }
+
+        function restoreSearchInputs() {
+            const saved = localStorage.getItem('jobstaffer_search_inputs');
+            if (!saved) return;
+            try {
+                const inputs = JSON.parse(saved);
+                if (inputs.title !== undefined) document.getElementById('job-title-input').value = inputs.title;
+                if (inputs.location !== undefined) document.getElementById('job-location-input').value = inputs.location;
+                if (inputs.limit !== undefined) document.getElementById('job-limit-input').value = inputs.limit;
+                if (inputs.age !== undefined) document.getElementById('job-age-input').value = inputs.age;
+                if (inputs.sites) {
+                    document.querySelectorAll('input[name="site-name"]').forEach(cb => {
+                        cb.checked = inputs.sites.includes(cb.value);
+                    });
+                }
+            } catch (err) {
+                console.error("Failed to restore search inputs:", err);
+            }
+        }
+
+        function setupInputListeners() {
+            const fields = ['job-title-input', 'job-location-input', 'job-limit-input', 'job-age-input'];
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', saveSearchInputs);
+            });
+            document.querySelectorAll('input[name="site-name"]').forEach(cb => {
+                cb.addEventListener('change', saveSearchInputs);
+            });
+        }
+
+        function restoreLastJobs() {
+            const saved = localStorage.getItem('jobstaffer_last_jobs');
+            if (!saved) return;
+            try {
+                currentJobs = JSON.parse(saved);
+                statScraped.textContent = currentJobs.length;
+                resultsCountStr.textContent = `(${currentJobs.length} results)`;
+                if (currentJobs.length > 0) {
+                    renderTable(currentJobs);
+                    tableWrapper.style.display = 'block';
+                    exportBtn.style.display = 'block';
+                    noResults.style.display = 'none';
+                }
+            } catch (err) {
+                console.error("Failed to restore last jobs:", err);
             }
         }
 
@@ -1333,6 +1396,7 @@
                 currentJobs = await response.json();
                 statScraped.textContent = currentJobs.length;
                 resultsCountStr.textContent = `(${currentJobs.length} results)`;
+                localStorage.setItem('jobstaffer_last_jobs', JSON.stringify(currentJobs));
 
                 if (currentJobs.length === 0) {
                     noResults.style.display = 'block';
