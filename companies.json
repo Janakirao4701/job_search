@@ -1,0 +1,348 @@
+{
+  "greenhouse": [
+    "stripe",
+    "airbnb",
+    "notion",
+    "figma",
+    "coinbase",
+    "robinhood",
+    "brex",
+    "gusto",
+    "lattice",
+    "scale-ai",
+    "anthropic",
+    "openai",
+    "affirm",
+    "hashicorp",
+    "snap",
+    "hubspot",
+    "irhythm"
+  ],
+
+  "lever": [
+    "netlify",
+    "shopify",
+    "atlassian",
+    "intercom",
+    "zendesk",
+    "twilio",
+    "amplitude",
+    "mixpanel",
+    "hotjar",
+    "lever",
+    "screencastify"
+  ],
+
+  "smartrecruiters": [
+    "ikea",
+    "visa",
+    "bosch",
+    "adidas",
+    "lidl",
+    "mcdonalds",
+    "carrier",
+    "equinox"
+  ],
+
+  "workday": [
+    { "company": "Microsoft",              "url": "https://microsoft.myworkdayjobs.com/en-US/Microsoft_Careers" },
+    { "company": "Salesforce",             "url": "https://salesforce.myworkdayjobs.com/en-US/External_Career_Site" },
+    { "company": "Workday",                "url": "https://workday.myworkdayjobs.com/en-US/Workday" },
+    { "company": "Walmart",                "url": "https://walmart.myworkdayjobs.com/en-US/Walmart_External_Careers" },
+    { "company": "Adobe",                  "url": "https://adobe.myworkdayjobs.com/en-US/external" },
+    { "company": "General Electric",       "url": "https://ge.myworkdayjobs.com/en-US/GE_External_Careers" },
+    { "company": "Cisco",                  "url": "https://cisco.myworkdayjobs.com/en-US/Cisco_External_Careers" },
+    { "company": "Intel",                  "url": "https://intel.myworkdayjobs.com/en-US/External" },
+    { "company": "NVIDIA",                 "url": "https://nvidia.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite" },
+    { "company": "Dell",                   "url": "https://dell.myworkdayjobs.com/en-US/External" },
+
+    { "company": "GE Vernova",             "url": "https://gevernova.wd1.myworkdayjobs.com/en-US/GEV_External_Careers" },
+    { "company": "Johnson Controls",       "url": "https://johnsoncontrols.myworkdayjobs.com/en-US/JCI" },
+    { "company": "Trane Technologies",     "url": "https://tranetechnologies.myworkdayjobs.com/en-US/Careers" },
+    { "company": "Hydro Extrusions",       "url": "https://hydro.wd3.myworkdayjobs.com/en-US/Hydro_External" },
+    { "company": "TriMas (Rieke LLC)",     "url": "https://trimas.wd1.myworkdayjobs.com/en-US/TriMas" },
+    { "company": "AbbVie",                 "url": "https://abbvie.myworkdayjobs.com/en-US/External_Career_Site" },
+    { "company": "ITW (Zip-Pak)",          "url": "https://itw.myworkdayjobs.com/en-US/ITWJobs" },
+
+    { "company": "Honeywell",              "url": "https://honeywell.myworkdayjobs.com/en-US/Honeywell" },
+    { "company": "Emerson Electric",       "url": "https://emerson.myworkdayjobs.com/en-US/Careers" },
+    { "company": "Rockwell Automation",    "url": "https://rockwellautomation.myworkdayjobs.com/en-US/Rockwell" },
+    { "company": "Schneider Electric",     "url": "https://schneiderelectric.myworkdayjobs.com/en-US/Careers" },
+    { "company": "ABB",                    "url": "https://abbcareers.myworkdayjobs.com/en-US/ABB" },
+    { "company": "Siemens",                "url": "https://siemens.myworkdayjobs.com/en-US/External" },
+    { "company": "Parker Hannifin",        "url": "https://parkerhannifin.myworkdayjobs.com/en-US/Parker" },
+    { "company": "Thermo Fisher Scientific","url": "https://thermofisher.myworkdayjobs.com/en-US/ThermoFisher" },
+    { "company": "Danaher",                "url": "https://danaher.myworkdayjobs.com/en-US/Careers" },
+    { "company": "IDEX Corporation",       "url": "https://idexcorp.myworkdayjobs.com/en-US/IDEX" },
+    { "company": "Jacobs Engineering",     "url": "https://jacobs.wd5.myworkdayjobs.com/en-US/Jacobs" },
+    { "company": "Eaton",                  "url": "https://eaton.eightfold.ai/careers" }
+  ],
+
+  "icims": [
+    { "company": "Kinder Morgan",          "url": "https://kindermorgan.icims.com/jobs/search" }
+  ],
+
+  "custom": [
+    {
+      "company": "GE Vernova",
+      "url": "https://careers.gevernova.com/jobs",
+      "ats": "SAP SuccessFactors",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Trane Technologies",
+      "url": "https://careers.tranetechnologies.com/global/en/search-results",
+      "ats": "Custom / Phenom",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Johnson Controls",
+      "url": "https://jobs.johnsoncontrols.com/job-search",
+      "ats": "Workday custom front-end",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "AbbVie",
+      "url": "https://careers.abbvie.com/en/jobs",
+      "ats": "Phenom People",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Siemens",
+      "url": "https://jobs.siemens.com/en_US/externaljobs",
+      "ats": "Custom (SAP)",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Siemens Energy",
+      "url": "https://jobs.siemens-energy.com/en_US/CareersMarketplace/FolderDetail/Controls-Engineer",
+      "ats": "Custom (SAP)",
+      "search_keyword": "Controls Engineer",
+      "notes": "Direct folder URL for Controls Engineer roles"
+    },
+    {
+      "company": "Schneider Electric",
+      "url": "https://careers.se.com/global/jobs",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "ABB",
+      "url": "https://careers.abb/global/en/home",
+      "ats": "Custom (Taleo)",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Rockwell Automation",
+      "url": "https://www.rockwellautomation.com/en-us/careers.html",
+      "ats": "Workday",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Emerson Electric",
+      "url": "https://www.emerson.com/en-us/careers",
+      "ats": "Workday",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Kinder Morgan",
+      "url": "https://careers.kindermorgan.com/careers-home/",
+      "ats": "iCIMS",
+      "search_keyword": "Automation Engineer"
+    },
+    {
+      "company": "Danaher",
+      "url": "https://jobs.danaher.com/global/en",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Burns & McDonnell",
+      "url": "https://burnsmcd.jobs/engineering-careers/instrumentation-controls-engineering/new-jobs/",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer",
+      "notes": "Dedicated I&C Engineering careers page"
+    },
+    {
+      "company": "Jacobs Engineering",
+      "url": "https://careers.jacobs.com/en_US/careers/SearchJobs",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Thermo Fisher Scientific",
+      "url": "https://jobs.thermofisher.com/global/en/united-states-jobs",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Wunderlich-Malec Engineering",
+      "url": "https://www.wmeng.com/careers/",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer",
+      "notes": "Top system integrator — constantly hiring controls engineers"
+    },
+    {
+      "company": "E Tech Group",
+      "url": "https://etechgroup.com/careers/",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer",
+      "notes": "Automation integrator with 30+ US locations"
+    },
+    {
+      "company": "Schweitzer Engineering Labs (SEL)",
+      "url": "https://selinc.com/company/careers/engineering/",
+      "ats": "Custom",
+      "search_keyword": "Automation Engineer",
+      "notes": "100% employee-owned; power systems controls"
+    },
+    {
+      "company": "Matrix Technologies",
+      "url": "https://www.matrixtechnologies.com/careers/",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer",
+      "notes": "Process controls system integrator"
+    },
+    {
+      "company": "Parker Hannifin",
+      "url": "https://parkerhannifin.myworkdayjobs.com/en-US/Parker",
+      "ats": "Workday",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "IDEX Corporation",
+      "url": "https://idexcorporation.jobs/",
+      "ats": "Custom (iApplicants)",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "ProMach",
+      "url": "https://promachcareers.com",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Sofidel America",
+      "url": "https://careers.sofidel.com/go/default/843102",
+      "ats": "PageUp",
+      "search_keyword": "Automation Engineer",
+      "notes": "Filter by United States"
+    },
+    {
+      "company": "MIRATECH",
+      "url": "https://miratechgroup.com/career/",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Mission Critical Group",
+      "url": "https://missioncriticalgroup.com/careers",
+      "ats": "Custom",
+      "search_keyword": "Automation Engineer"
+    },
+    {
+      "company": "Waga Energy",
+      "url": "https://careers.waga-energy.com/en/jobs",
+      "ats": "Welcome to the Jungle",
+      "search_keyword": "Automation Engineer",
+      "notes": "Filter by United States"
+    },
+    {
+      "company": "MEPPI (Mitsubishi Electric Power Products)",
+      "url": "https://meppi.hrmdirect.com/employment/openings.php",
+      "ats": "HRMDirect",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Nikkiso Clean Energy & Industrial Gases",
+      "url": "https://nikkisoceig.com/our-company/careers",
+      "ats": "HRMDirect",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Voltify",
+      "url": "https://careers.voltify.com/",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Carollo Engineers",
+      "url": "https://carollo.com/careers/career-opportunities/",
+      "ats": "Custom WordPress",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Trelleborg",
+      "url": "https://www.trelleborg.com/en/seals/about-us/careers",
+      "ats": "Custom",
+      "search_keyword": "Automation Controls Engineer",
+      "notes": "Filter by Country = USA"
+    },
+    {
+      "company": "APM Terminals",
+      "url": "https://www.apmterminals.com/careers/vacancies",
+      "ats": "Maersk Group",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Spectrum Brands",
+      "url": "https://spectrumbrands.com/careers/job-search/index.html",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Reading Truck Group",
+      "url": "https://www.readingtruck.com/about/careers/",
+      "ats": "Custom (J.B. Poindexter)",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Schwan's Company",
+      "url": "https://www.schwansjobs.com/search-jobs",
+      "ats": "Phenom",
+      "search_keyword": "Controls Technician"
+    },
+    {
+      "company": "Vertech",
+      "url": "https://www.vertech.com/careers",
+      "ats": "Custom",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Moonshot WORKFORCE LLC",
+      "url": "https://apply.workable.com/moonshot/",
+      "ats": "Workable",
+      "search_keyword": "Automation Engineer"
+    },
+    {
+      "company": "Sight & Sound Theatres",
+      "url": "https://www.sight-sound.com/careers",
+      "ats": "Custom",
+      "search_keyword": "Automation Designer"
+    },
+    {
+      "company": "ASI (Autonomous Solutions Inc.)",
+      "url": "https://asirobots.com/",
+      "ats": "None - LinkedIn fallback",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "Maker's Pride",
+      "url": "https://www.makerspride.com/careers/",
+      "ats": "None - LinkedIn fallback",
+      "search_keyword": "Controls Engineer"
+    },
+    {
+      "company": "ESCO Group",
+      "url": "https://www.linkedin.com/company/esco-group/jobs/",
+      "ats": "LinkedIn only",
+      "search_keyword": "Automation Controls Engineer"
+    },
+    {
+      "company": "Rumford RI Company",
+      "url": "https://www.linkedin.com/company/rumford-ri-company/jobs/",
+      "ats": "LinkedIn only",
+      "search_keyword": "Controls Engineer"
+    }
+  ]
+}

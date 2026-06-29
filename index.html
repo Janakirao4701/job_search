@@ -451,6 +451,12 @@
             display: none;
         }
 
+        .kw-tag:hover {
+            background: rgba(99, 102, 241, 0.15) !important;
+            border-color: var(--color-indigo) !important;
+            color: white !important;
+        }
+
         .custom-checkbox {
             width: 18px;
             height: 18px;
@@ -623,6 +629,11 @@
         .badge-google { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
         .badge-glassdoor { background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3); }
         .badge-portal { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .badge-greenhouse { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-lever { background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
+        .badge-workday { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-smartrecruiters { background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
+        .badge-workable { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.3); }
 
         .apply-btn {
             background: var(--color-indigo);
@@ -826,6 +837,14 @@
                             <div class="input-group">
                                 <label for="job-title-input">Job Title / Keywords</label>
                                 <input type="text" id="job-title-input" class="text-input" placeholder="e.g. Test Engineer, QA Automation">
+                                <div class="keyword-tags" style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px;">
+                                    <span class="kw-tag" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--panel-border); border-radius: 4px; padding: 2px 6px; font-size: 0.72rem; color: var(--text-secondary); cursor: pointer; transition: var(--transition);" onclick="selectKeyword(this.textContent)">Test Engineer</span>
+                                    <span class="kw-tag" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--panel-border); border-radius: 4px; padding: 2px 6px; font-size: 0.72rem; color: var(--text-secondary); cursor: pointer; transition: var(--transition);" onclick="selectKeyword(this.textContent)">PLC Programmer</span>
+                                    <span class="kw-tag" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--panel-border); border-radius: 4px; padding: 2px 6px; font-size: 0.72rem; color: var(--text-secondary); cursor: pointer; transition: var(--transition);" onclick="selectKeyword(this.textContent)">DCS Engineer</span>
+                                    <span class="kw-tag" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--panel-border); border-radius: 4px; padding: 2px 6px; font-size: 0.72rem; color: var(--text-secondary); cursor: pointer; transition: var(--transition);" onclick="selectKeyword(this.textContent)">SCADA Engineer</span>
+                                    <span class="kw-tag" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--panel-border); border-radius: 4px; padding: 2px 6px; font-size: 0.72rem; color: var(--text-secondary); cursor: pointer; transition: var(--transition);" onclick="selectKeyword(this.textContent)">Robotics Engineer</span>
+                                    <span class="kw-tag" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--panel-border); border-radius: 4px; padding: 2px 6px; font-size: 0.72rem; color: var(--text-secondary); cursor: pointer; transition: var(--transition);" onclick="selectKeyword(this.textContent)">BAS Engineer</span>
+                                </div>
                             </div>
                             <div class="input-group">
                                 <label for="job-location-input">Location</label>
@@ -836,14 +855,30 @@
                                 <input type="number" id="job-limit-input" class="text-input" value="50" min="1" max="100">
                             </div>
                             <div class="input-group">
-                                <label for="job-age-input">Max Age (Hours)</label>
-                                <input type="number" id="job-age-input" class="text-input" value="72" min="1">
+                                <label for="job-days-input">Time Filter</label>
+                                <select id="job-days-input" class="text-input" style="background: rgba(0, 0, 0, 0.2); border: 1px solid var(--panel-border); border-radius: var(--radius-sm); padding: 0.75rem 1rem; color: var(--text-primary); cursor: pointer; width: 100%;">
+                                    <option value="1">Last 24 Hours</option>
+                                    <option value="3" selected>Last 3 Days</option>
+                                    <option value="7">Last 7 Days</option>
+                                    <option value="30">Last 30 Days</option>
+                                </select>
+                            </div>
+                            <div class="input-group" style="grid-column: span 4;">
+                                <label for="job-companies-input">Target Companies Override (comma-separated slugs, e.g. stripe, netlify, microsoft)</label>
+                                <input type="text" id="job-companies-input" class="text-input" placeholder="Leave empty to search all configured companies in companies.json">
                             </div>
                         </div>
 
-                        <div class="site-checks-group">
-                            <label>Scrape Targets (Concurrently)</label>
-                            <div class="site-checks-container">
+                        <div class="site-checks-group" style="margin-top: 1rem;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <label style="margin-bottom: 0; font-weight: 600;">Scrape Targets (Concurrently)</label>
+                                <label class="checkbox-label" style="font-size: 0.85rem; color: var(--color-indigo); font-weight: 600; cursor: pointer; user-select: none;">
+                                    <input type="checkbox" id="select-all-sources" checked>
+                                    <span class="custom-checkbox" style="border-color: var(--color-indigo); width: 14px; height: 14px;"></span>
+                                    Select All Sources
+                                </label>
+                            </div>
+                            <div class="site-checks-container" style="display: flex; flex-wrap: wrap; gap: 1rem;">
                                 <label class="checkbox-label">
                                     <input type="checkbox" name="site-name" value="linkedin" checked>
                                     <span class="custom-checkbox"></span>
@@ -855,7 +890,32 @@
                                     Indeed
                                 </label>
                                 <label class="checkbox-label">
-                                    <input type="checkbox" name="site-name" value="zip_recruiter" checked>
+                                    <input type="checkbox" name="site-name" value="greenhouse" checked>
+                                    <span class="custom-checkbox"></span>
+                                    Greenhouse
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="site-name" value="lever" checked>
+                                    <span class="custom-checkbox"></span>
+                                    Lever
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="site-name" value="workable" checked>
+                                    <span class="custom-checkbox"></span>
+                                    Workable
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="site-name" value="workday" checked>
+                                    <span class="custom-checkbox"></span>
+                                    Workday
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="site-name" value="smartrecruiters" checked>
+                                    <span class="custom-checkbox"></span>
+                                    SmartRecruiters
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="site-name" value="zip_recruiter">
                                     <span class="custom-checkbox"></span>
                                     ZipRecruiter
                                 </label>
@@ -863,11 +923,6 @@
                                     <input type="checkbox" name="site-name" value="glassdoor">
                                     <span class="custom-checkbox"></span>
                                     Glassdoor
-                                </label>
-                                <label class="checkbox-label" id="google-check-label">
-                                    <input type="checkbox" name="site-name" value="google" checked>
-                                    <span class="custom-checkbox"></span>
-                                    Google Jobs (Careers portals)
                                 </label>
                             </div>
                         </div>
@@ -1062,7 +1117,8 @@
                 title: document.getElementById('job-title-input').value,
                 location: document.getElementById('job-location-input').value,
                 limit: document.getElementById('job-limit-input').value,
-                age: document.getElementById('job-age-input').value,
+                days: document.getElementById('job-days-input').value,
+                companies: document.getElementById('job-companies-input').value,
                 sites: Array.from(document.querySelectorAll('input[name="site-name"]:checked')).map(cb => cb.value)
             };
             localStorage.setItem('jobstaffer_search_inputs', JSON.stringify(inputs));
@@ -1076,11 +1132,13 @@
                 if (inputs.title !== undefined) document.getElementById('job-title-input').value = inputs.title;
                 if (inputs.location !== undefined) document.getElementById('job-location-input').value = inputs.location;
                 if (inputs.limit !== undefined) document.getElementById('job-limit-input').value = inputs.limit;
-                if (inputs.age !== undefined) document.getElementById('job-age-input').value = inputs.age;
+                if (inputs.days !== undefined) document.getElementById('job-days-input').value = inputs.days;
+                if (inputs.companies !== undefined) document.getElementById('job-companies-input').value = inputs.companies;
                 if (inputs.sites) {
                     document.querySelectorAll('input[name="site-name"]').forEach(cb => {
                         cb.checked = inputs.sites.includes(cb.value);
                     });
+                    updateSelectAllCheckbox();
                 }
             } catch (err) {
                 console.error("Failed to restore search inputs:", err);
@@ -1088,10 +1146,13 @@
         }
 
         function setupInputListeners() {
-            const fields = ['job-title-input', 'job-location-input', 'job-limit-input', 'job-age-input'];
+            const fields = ['job-title-input', 'job-location-input', 'job-limit-input', 'job-days-input', 'job-companies-input'];
             fields.forEach(id => {
                 const el = document.getElementById(id);
-                if (el) el.addEventListener('input', saveSearchInputs);
+                if (el) {
+                    const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
+                    el.addEventListener(eventType, saveSearchInputs);
+                }
             });
             document.querySelectorAll('input[name="site-name"]').forEach(cb => {
                 cb.addEventListener('change', saveSearchInputs);
@@ -1100,11 +1161,16 @@
 
         function restoreLastJobs() {
             const saved = localStorage.getItem('jobstaffer_last_jobs');
+            const savedSummary = localStorage.getItem('jobstaffer_last_summary');
             if (!saved) return;
             try {
                 currentJobs = JSON.parse(saved);
                 statScraped.textContent = currentJobs.length;
-                resultsCountStr.textContent = `(${currentJobs.length} results)`;
+                if (savedSummary) {
+                    resultsCountStr.innerHTML = savedSummary;
+                } else {
+                    resultsCountStr.textContent = `(${currentJobs.length} results)`;
+                }
                 if (currentJobs.length > 0) {
                     renderTable(currentJobs);
                     tableWrapper.style.display = 'block';
@@ -1313,6 +1379,11 @@
             statInterviewing.textContent = interviewingCount;
         }
 
+        function selectKeyword(kw) {
+            document.getElementById('job-title-input').value = kw;
+            saveSearchInputs();
+        }
+
         // Toast notification system
         function showToast(message, type = 'success') {
             toastMessage.textContent = message;
@@ -1339,6 +1410,23 @@
             window.open(url, '_blank');
         });
 
+        // Select all / Unselect all sources logic
+        const selectAllSources = document.getElementById('select-all-sources');
+        const sourceCheckboxes = document.querySelectorAll('input[name="site-name"]');
+
+        selectAllSources.addEventListener('change', () => {
+            const isChecked = selectAllSources.checked;
+            sourceCheckboxes.forEach(cb => {
+                cb.checked = isChecked;
+            });
+            saveSearchInputs();
+        });
+
+        function updateSelectAllCheckbox() {
+            const allChecked = Array.from(sourceCheckboxes).every(cb => cb.checked);
+            selectAllSources.checked = allChecked;
+        }
+
         // Job site crawl action
         searchBtn.addEventListener('click', async () => {
             if (!isLocalMode) {
@@ -1349,7 +1437,13 @@
             const search_term = document.getElementById('job-title-input').value.trim();
             const location = document.getElementById('job-location-input').value.trim();
             const results_wanted = document.getElementById('job-limit-input').value;
-            const hours_old = document.getElementById('job-age-input').value;
+            const days_ago = document.getElementById('job-days-input').value;
+            const companiesText = document.getElementById('job-companies-input').value.trim();
+            
+            let target_companies = [];
+            if (companiesText) {
+                target_companies = companiesText.split(',').map(s => s.trim()).filter(s => s.length > 0);
+            }
 
             // Get selected site checkboxes
             const selectedSites = [];
@@ -1380,11 +1474,12 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        search_term,
-                        location,
-                        site_names: selectedSites,
-                        results_wanted,
-                        hours_old
+                        keywords: search_term,
+                        location: location,
+                        sources: selectedSites,
+                        results_wanted: parseInt(results_wanted),
+                        days_ago: parseInt(days_ago),
+                        companies: target_companies
                     })
                 });
 
@@ -1393,10 +1488,15 @@
                     throw new Error(errData.error || "Scraper engine returned an error status.");
                 }
 
-                currentJobs = await response.json();
+                const data = await response.json();
+                currentJobs = data.results || [];
+                const duplicatesRemoved = data.duplicates_removed || 0;
+                const searchTimeMs = data.search_time_ms || 0;
+
                 statScraped.textContent = currentJobs.length;
-                resultsCountStr.textContent = `(${currentJobs.length} results)`;
+                resultsCountStr.innerHTML = `Found ${currentJobs.length} jobs &bull; ${duplicatesRemoved} duplicates removed &bull; Searched in ${(searchTimeMs / 1000).toFixed(1)}s &bull; Sources: ${selectedSites.join(', ')}`;
                 localStorage.setItem('jobstaffer_last_jobs', JSON.stringify(currentJobs));
+                localStorage.setItem('jobstaffer_last_summary', resultsCountStr.innerHTML);
 
                 if (currentJobs.length === 0) {
                     noResults.style.display = 'block';
@@ -1424,12 +1524,13 @@
             jobs.forEach(job => {
                 const tr = document.createElement('tr');
                 
-                const jobUrl = job.job_url || '#';
+                const jobUrl = job.apply_url || job.job_url || '#';
                 const title = job.title || 'Untitled';
                 const company = job.company || 'Unknown Company';
                 const jobLoc = job.location || 'N/A';
-                const datePosted = job.date_posted || 'N/A';
-                const source = job.site || 'Indeed';
+                const datePosted = job.date_label || job.date_posted || 'N/A';
+                const source = job.source || job.site || 'Indeed';
+                const sourceType = job.source_type || 'indeed';
 
                 // Look up status in tracker
                 const jobTrack = tracker[jobUrl] || {};
@@ -1439,7 +1540,7 @@
                 // Build Row HTML
                 tr.innerHTML = `
                     <td>
-                        <span class="badge badge-${source.toLowerCase().replace(' ', '_')}">${source}</span>
+                        <span class="badge badge-${sourceType.toLowerCase().replace(' ', '_')}">${source}</span>
                     </td>
                     <td>
                         <div class="job-title-cell">
@@ -1450,10 +1551,15 @@
                     <td><span style="font-size: 0.85rem; color: var(--text-secondary);">${jobLoc}</span></td>
                     <td><span style="font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; color: var(--text-muted);">${datePosted}</span></td>
                     <td>
-                        <a href="${jobUrl}" target="_blank" class="apply-btn" onclick="registerApplyClick('${jobUrl}', '${title.replace(/'/g, "\\'")}', '${company.replace(/'/g, "\\'")}')">
-                            Apply
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                        </a>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <a href="${jobUrl}" target="_blank" class="apply-btn" onclick="registerApplyClick('${jobUrl}', '${title.replace(/'/g, "\\'")}', '${company.replace(/'/g, "\\'")}')">
+                                Apply
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </a>
+                            <button class="btn-outline" style="padding: 6px 8px;" onclick="copyDirectLink('${jobUrl}', this)" title="Copy Link">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                            </button>
+                        </div>
                     </td>
                     <td>
                         <select class="status-select ${getStatusClass(currentStatus)}" onchange="updateJobStatus('${jobUrl}', this.value, '${title.replace(/'/g, "\\'")}', '${company.replace(/'/g, "\\'")}')">
@@ -1466,6 +1572,23 @@
                 `;
 
                 resultsTbody.appendChild(tr);
+            });
+        }
+
+        function copyDirectLink(url, btn) {
+            navigator.clipboard.writeText(url).then(() => {
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '✓';
+                btn.style.borderColor = 'var(--color-emerald)';
+                btn.style.color = 'var(--color-emerald)';
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                }, 1500);
+                showToast("Link copied to clipboard!");
+            }).catch(err => {
+                console.error("Failed to copy link:", err);
             });
         }
 
@@ -1542,12 +1665,12 @@
             csvContent += "Source,Title,Company,Location,Date Posted,URL,Status,Client\n";
 
             currentJobs.forEach(job => {
-                const source = job.site || '';
+                const source = job.source || job.site || '';
                 const title = (job.title || '').replace(/"/g, '""');
                 const company = (job.company || '').replace(/"/g, '""');
                 const loc = (job.location || '').replace(/"/g, '""');
-                const date = job.date_posted || '';
-                const url = job.job_url || '';
+                const date = job.date_label || job.date_posted || '';
+                const url = job.apply_url || job.job_url || '';
                 
                 const track = tracker[url] || {};
                 const status = track.status || 'Not Applied';
